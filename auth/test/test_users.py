@@ -17,8 +17,8 @@ def test_sign_up():
     assert r.json()['message'] == 'Success'
     # test no duplicate username
     r = sign_up(payload_user)
-    assert r.status_code == 400
-    assert r.json()['message'] == 'this username is already taken. chose another'
+    assert r.status_code == 409
+    assert r.json()['message'] == 'username is already taken. chose another'
     # test password match
     payload_user = {
         "username": "user test 1",
@@ -63,7 +63,7 @@ def test_signup_data_validation():
     }
     r = sign_up(payload_user)
     assert r.status_code == 400
-    assert r.json()['message'] == "username is can not be empty"
+    assert r.json()['message'] == "username can not be empty"
     # empty password
     payload_user = {
         "username": "abcdef",
@@ -72,4 +72,4 @@ def test_signup_data_validation():
     }
     r = sign_up(payload_user)
     assert r.status_code == 400
-    assert r.json()['message'] == "password is can not be empty"
+    assert r.json()['message'] == "password can not be empty"
