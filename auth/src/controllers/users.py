@@ -31,8 +31,10 @@ def signup(data):
        # create user        
         byte_password = password.encode('utf-8')
         hashed_password = bcrypt.hashpw(byte_password, bcrypt.gensalt())
+        hashed_password = hashed_password.decode('utf-8')
         insert(username, hashed_password)
         return {'message': 'Success'}, 201
     
     except Exception as e:
+        print(e)
         return {'message': 'Internal server error'}, 500
