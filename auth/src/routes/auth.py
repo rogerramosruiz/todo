@@ -7,6 +7,10 @@ auth = Blueprint('auth',__name__, url_prefix='/api/v1')
 def login():
     return controllers.auth.login(request.get_json())
 
-@auth.route('/token', methods = ['POST'])
+# logout
+# deleting form reddis cash
+
+
+@auth.route('/token', methods = ['GET'])
 def token():
-    return controllers.auth.token()
+    return controllers.auth.token(request.headers)
