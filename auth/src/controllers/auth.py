@@ -2,7 +2,7 @@ from db.users import select_one_by
 from helpers.auth import generate_access, generate_refresh, check_password
 import jwt
 from config.environment import REFRESH_TOKEN_SECRET
-
+from flask import g
 
 def login(data):
     if 'username' not in data:
@@ -28,13 +28,7 @@ def login(data):
     return 'Invalid credential try again'
 
 
-def token(headers):
-    token = headers.get('Authorization', '')
-    if token == '':
-        return {'message': 'Token is required'}, 400
-    token = token.split(' ')[1]
-    unverified_headers = jwt.get_unverified_header(token)
-    payload = jwt.decode(token, key = REFRESH_TOKEN_SECRET, algorithms = unverified_headers.get('alg'))
-    id = payload.get('sub')
-    username = payload.get('username')
-    return {"access_token": generate_access(id, username)}
+def token():
+    id = g.id
+    username = g.username
+    return {"access_token": generate_access(id, username)}  
