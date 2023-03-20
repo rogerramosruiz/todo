@@ -1,8 +1,9 @@
 from db.users import select_one_by
 from helpers.auth import generate_access, generate_refresh, check_password
-import jwt
-from config.environment import REFRESH_TOKEN_SECRET
 from flask import g
+
+from redis_client.ops import add
+from helpers.time_math import dif_time
 
 def login(data):
     if 'username' not in data:
@@ -27,8 +28,14 @@ def login(data):
     
     return 'Invalid credential try again'
 
+def logout():
+    token = g.token
+    redis_exp = dif_time(g.payload['exp'])
+    add(token, '0', redis_exp)
+    return {'message': 'success'}
 
 def token():
-    id = g.id
-    username = g.username
+    payload = g.payload
+    id = payload['sub']
+    username = payload['username']
     return {"access_token": generate_access(id, username)}  

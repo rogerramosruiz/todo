@@ -21,7 +21,6 @@ def generate_refresh(id, username):
         "exp": (now + timedelta(days=1)).timestamp(),
         "username": username
     }
-    # add username 
     refresh_token = jwt.encode(payload = payload, key = REFRESH_TOKEN_SECRET,  algorithm='HS256')
     return refresh_token
 
