@@ -1,5 +1,5 @@
-from helpers import random_string, sign_up, gen_user
-
+from helpers import random_string, gen_user
+from request import sign_up
 
 def test_sign_up():
     payload_user = gen_user()
