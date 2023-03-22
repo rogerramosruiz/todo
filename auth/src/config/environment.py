@@ -14,6 +14,19 @@ DB_USER = os.getenv('DB_USER')
 ACCESS_TOKEN_SECRET = os.getenv('ACCESS_TOKEN_SECRET')
 REFRESH_TOKEN_SECRET = os.getenv('REFRESH_TOKEN_SECRET')
 
+ACCESS_TIME = {
+    'days': int(os.environ.get('ACCESS_DAYS')),
+    'hours': int(os.environ.get('ACCESS_HOURS')),
+    'minutes': int(os.environ.get('ACCESS_MINUTES')),
+    'seconds' : int(os.environ.get('ACCESS_SECONDS'))
+}
+    
+REFRESH_TIME = {
+    'days': int(os.environ.get('REFRESH_DAYS')),
+    'hours': int(os.environ.get('REFRESH_HOURS')),
+    'minutes': int(os.environ.get('REFRESH_MINUTES')),
+    'seconds' : int(os.environ.get('REFRESH_SECONDS'))
+}
 #REDIS
 
 REDIS_HOST = os.environ.get('REDIS_HOST')

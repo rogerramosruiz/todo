@@ -7,10 +7,7 @@ def test_login():
     user = gen_user()
     sign_up(user)
     user.pop('confirmation_password')
-    user = {
-        'username' :'user test',
-        'password' : '123456'
-    }
+
     r = login(user)
     assert r.status_code == 200
     json_resp = r.json()

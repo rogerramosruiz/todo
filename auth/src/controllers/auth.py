@@ -1,5 +1,5 @@
 from db.users import select_one_by
-from helpers.auth import generate_access, generate_refresh, check_password
+from helpers.auth import check_password, generate_token
 from flask import g
 
 from redis_client.ops import add
@@ -22,11 +22,11 @@ def login(data):
     if user:
         hashed_password = user[2]
         if check_password(password, hashed_password):
-            access_token = generate_access(user[0], username)
-            refresh_token = generate_refresh(user[0], username)
+            access_token = generate_token(user[0], username, access=True)
+            refresh_token = generate_token(user[0], username, access=False)
             return {"access_token":access_token, "refresh_token":refresh_token}
     
-    return 'Invalid credential try again'
+    return 'Invalid credential try again', 400 
 
 def logout():
     token = g.token
@@ -38,4 +38,4 @@ def token():
     payload = g.payload
     id = payload['sub']
     username = payload['username']
-    return {"access_token": generate_access(id, username)}  
+    return {"access_token": generate_token(id, username, access=True)}
