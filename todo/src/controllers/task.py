@@ -1,5 +1,5 @@
-from db.task import select, add, edit
-from helpers.serilizer import serilize_list
+from db.task import select,select_one, add, edit, delete
+from helpers.serilizer import serilize, serilize_list
 
 
 def get_tasks(id_users, args):
@@ -14,6 +14,17 @@ def get_tasks(id_users, args):
         # serilize data
         tasks = serilize_list(data, description)
         return tasks
+    except Exception as e:
+        print(e)
+        return {'message': "Internal server error"}, 500
+
+def get_task(id):
+    try:
+        data, description = select_one(id)
+        if data is None:
+            return {'message': 'Task not found'}, 404
+        task = serilize(data, description)    
+        return task
     except Exception as e:
         print(e)
         return {'message': "Internal server error"}, 500
@@ -51,3 +62,10 @@ def edit_task(id, data):
         print(e)
         return {'message': 'Internal server error'}, 500
     return {'message': 'Success'}, 202
+
+def delete_task(id):
+    try:
+        delete(id)
+        return {"message": "Success"}, 202
+    except:
+        return {'message': 'Internal server error'}, 500

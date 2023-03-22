@@ -1,5 +1,5 @@
 from db.connection import connection
-
+import db.queries as queries
 table = 'task'
 
 def select(id_user ,limit:int = 30, offset:int = 0):
@@ -11,7 +11,13 @@ def select(id_user ,limit:int = 30, offset:int = 0):
         description = cur.description
         data = cur.fetchall()
         return data, description
-    
+
+def select_one(id):
+    """
+    Select one task
+    """
+    return queries.select_one(table, id)
+
 def add(name, id_user):
     """
     Creates a new task
