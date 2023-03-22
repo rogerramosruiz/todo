@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS task(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    done BOOLEAN NOT NULL,
+    id_user INTEGER
+);
+
+-- DROP TABLE task
