@@ -1,7 +1,9 @@
 from flask import Flask
 from config.environment import PORT, DEBUG
-app = Flask(__name__)
+from routes.task import task
 
+app = Flask(__name__)
+app.register_blueprint(task)
 
 
 if __name__ == '__main__':

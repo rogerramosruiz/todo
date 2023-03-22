@@ -6,7 +6,7 @@ import psycopg2
 @contextmanager
 def connection():
     """
-    Connects to the data base
+    Connection to database
     """
     try:
         conn = psycopg2.connect(
@@ -14,8 +14,11 @@ def connection():
             database=DB_NAME,
             user=DB_USER,
             password=DB_PASSWORD)
+        
         cursor = conn.cursor()
         yield cursor, conn
+    except Exception as e:
+        print(e)
     finally:
         cursor.close()
         conn.close()
