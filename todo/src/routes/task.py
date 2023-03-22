@@ -11,3 +11,7 @@ def get_tasks(id_user):
 @task.route('', methods = ['POST'])
 def create_task():
     return task_controller.create_task(request.get_json())
+
+@task.route('/<int:id>', methods=["PUT"])
+def edit_task(id):
+    return task_controller.edit_task(id, request.get_json())
