@@ -26,7 +26,7 @@ def login(data):
             refresh_token = generate_token(user[0], username, access=False)
             return {"access_token":access_token, "refresh_token":refresh_token}
     
-    return 'Invalid credential try again', 400 
+    return {'message': 'invalid credentials try again'}, 400 
 
 def logout():
     token = g.token

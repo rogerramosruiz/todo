@@ -53,6 +53,13 @@ def test_login_validations():
     assert r.status_code == 400
     assert r.json()['message'] == 'password can not be empty'
 
+    # invalid credentials
+    user = gen_user()
+    user.pop('confirmation_password')
+
+    r = login(user)
+    assert r.status_code == 400
+    assert r.json()['message'] == 'invalid credentials try again'
 
 def test_refresh_token():
     user = gen_user()
