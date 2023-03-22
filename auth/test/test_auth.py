@@ -12,7 +12,9 @@ def test_login():
     assert r.status_code == 200
     json_resp = r.json()
     assert 'access_token' in json_resp
+    assert str(json_resp['expires_in']).isnumeric()
     assert 'refresh_token' in json_resp
+    assert str(json_resp['refresh_token_expires_in']).isnumeric()
 
 def test_login_validations():
     # no username in payload
@@ -78,7 +80,7 @@ def test_refresh_token():
     new_access_token = json_resp['access_token']
     assert r.status_code == 200
     assert new_access_token != access_token
-
+    assert str(json_resp['expires_in']).isnumeric()
 
 def test_refresh_token_validations():
     r = refresh_token(None)

@@ -13,18 +13,22 @@ def login(data):
         
     username = data['username']
     password = data['password']
-    if username == "":
+    if username == '':
         return {'message': 'username can not be empty'}, 400
-    if password == "":
+    if password == '':
         return {'message': 'password can not be empty'}, 400
     
     user = select_one_by('username', username)
     if user:
         hashed_password = user[2]
         if check_password(password, hashed_password):
-            access_token = generate_token(user[0], username, access=True)
-            refresh_token = generate_token(user[0], username, access=False)
-            return {"access_token":access_token, "refresh_token":refresh_token}
+            access_token, access_expiration = generate_token(user[0], username, access=True)
+            refresh_token, refresh_expiration = generate_token(user[0], username, access=False)
+            return {'access_token': access_token, 
+                    'expires_in': access_expiration,
+                    'refresh_token': refresh_token,
+                    'refresh_token_expires_in': refresh_expiration
+                    }
     
     return {'message': 'invalid credentials try again'}, 400 
 
@@ -38,4 +42,5 @@ def token():
     payload = g.payload
     id = payload['sub']
     username = payload['username']
-    return {"access_token": generate_token(id, username, access=True)}
+    access_token, expiration = generate_token(id, username, access=True)
+    return {'access_token': access_token, 'expires_in': expiration}

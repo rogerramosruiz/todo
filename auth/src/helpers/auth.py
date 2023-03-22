@@ -20,16 +20,15 @@ def select_type(access:bool = True):
 def generate_token(id, username, access:bool = True):
     secret, time_delta = select_type(access)
     now = datetime.now()
+    iat = int(now.timestamp())
+    expiration = int((now + time_delta).timestamp())
     payload = {
         "sub": id,
-        "iat": now.timestamp(),
-        "exp": (now + time_delta).timestamp(),
+        "iat": iat,
+        "exp": expiration,
         "username": username
     }
-    return jwt.encode(payload = payload, key = secret, algorithm = 'HS256')
+    return jwt.encode(payload = payload, key = secret, algorithm = 'HS256'), expiration
     
-def generate_tokens(id, username):
-    return generate_token(id, username, 'access'), generate_token(id, username, 'refresh')
-
 def check_password(password, hashed_password):
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
