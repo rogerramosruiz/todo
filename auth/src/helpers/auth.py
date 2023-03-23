@@ -1,6 +1,11 @@
 from datetime import datetime, timedelta
 import jwt
 import bcrypt
+
+from jwt.exceptions import ExpiredSignatureError, ImmatureSignatureError, InvalidAlgorithmError, InvalidKeyError, InvalidSignatureError
+from redis_client.ops import exists
+
+
 from config.environment import ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET, ACCESS_TIME, REFRESH_TIME
 
 def select_type(access:bool = True):
@@ -32,3 +37,16 @@ def generate_token(id, username, access:bool = True):
     
 def check_password(password, hashed_password):
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
+
+def verify_token(token, access:bool = True):
+    if exists(token):
+        raise Exception('invalid token')
+    try:
+        unverified_headers = jwt.get_unverified_header(token)
+        return jwt.decode(token, key = REFRESH_TOKEN_SECRET, algorithms = unverified_headers.get('alg'))
+    except (ExpiredSignatureError, ImmatureSignatureError, InvalidAlgorithmError, InvalidKeyError, InvalidSignatureError) as error:
+        raise error
+        # return {'message': str(error)}, 401
+    except Exception as e:
+        print(e)
+        raise Exception('invalid token')
