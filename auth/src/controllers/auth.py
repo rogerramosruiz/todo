@@ -1,9 +1,9 @@
-from db.users import select_one_by
-from helpers.auth import check_password, generate_token
 from flask import g
 
+from db.users import select_one_by
 from redis_client.ops import add
 from helpers.time_math import dif_time
+from helpers.auth import check_password, generate_token, verify_token
 
 def login(data):
     if 'username' not in data:
@@ -44,3 +44,17 @@ def token():
     username = payload['username']
     access_token, expiration = generate_token(id, username, access=True)
     return {'access_token': access_token, 'expires_in': expiration}
+
+def verify(headers):
+    token = headers.get('Authorization', '')
+    if token == '':
+        return {'message': 'Token is required'}, 400
+    token = token.split(' ')[1].strip()
+    try:
+        payload = verify_token(token, access=True)
+        return {
+            'message': 'ok',
+            'data': payload
+        }
+    except Exception as e:
+        return {'message': str(e)}, 401

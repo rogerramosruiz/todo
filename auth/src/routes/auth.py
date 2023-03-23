@@ -16,3 +16,7 @@ def logout():
 @refresh_token_verifier
 def token():
     return controllers.auth.token()
+
+@auth.route('verify', methods = ['GET'])
+def verify():
+    return controllers.auth.verify(request.headers)

@@ -1,5 +1,5 @@
 from helpers import random_string, gen_user
-from request import sign_up, login, refresh_token, logout
+from request import sign_up, login, refresh_token, logout, verication_token
 
 import time
 
@@ -117,3 +117,17 @@ def test_logout():
     assert r.status_code == 401
     assert r.json()['message'] == 'invalid token'
 
+
+def test_verification_token():
+    user = gen_user()
+    sign_up(user)
+    user.pop('confirmation_password')
+    
+    r = login(user)
+    json_resp = r.json()
+    access_token = json_resp['access_token']
+    r = verication_token(access_token)
+    assert r.status_code == 200
+    json_resp = r.json()
+    assert json_resp['message'] == 'ok'
+    assert json_resp['data']['username'] == user['username']

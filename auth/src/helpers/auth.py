@@ -39,14 +39,14 @@ def check_password(password, hashed_password):
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
 
 def verify_token(token, access:bool = True):
+    secret, _ = select_type(access)
     if exists(token):
         raise Exception('invalid token')
     try:
         unverified_headers = jwt.get_unverified_header(token)
-        return jwt.decode(token, key = REFRESH_TOKEN_SECRET, algorithms = unverified_headers.get('alg'))
+        return jwt.decode(token, key = secret, algorithms = unverified_headers.get('alg'))
     except (ExpiredSignatureError, ImmatureSignatureError, InvalidAlgorithmError, InvalidKeyError, InvalidSignatureError) as error:
         raise error
-        # return {'message': str(error)}, 401
     except Exception as e:
         print(e)
         raise Exception('invalid token')

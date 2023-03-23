@@ -16,3 +16,8 @@ def logout(token):
     return requests.delete(f'{ENDPOINT}/logout', headers={
         'Authorization': f'Bearer {token}'
     })
+
+def verication_token(token):
+    return requests.get(f'{ENDPOINT}/verify', headers={
+        'Authorization': f'Bearer {token}'
+    })
