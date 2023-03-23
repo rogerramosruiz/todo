@@ -35,7 +35,6 @@ def test_login_validations():
     user.pop('password')
     r = login(user)
     assert r.status_code == 400
-    print(r.json())
     assert r.json()['message'] == 'password is required'
     
     # username empty

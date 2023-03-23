@@ -12,11 +12,11 @@ def select(id_user ,limit:int = 30, offset:int = 0):
         data = cur.fetchall()
         return data, description
 
-def select_one(id):
+def select_one(id_user, id):
     """
     Select one task
     """
-    return queries.select_one(table, id)
+    return queries.select_one(table, id, id_user)
 
 def add(name, id_user):
     """
@@ -29,17 +29,17 @@ def add(name, id_user):
         return id
 
 
-def edit(id, name, done):
+def edit(id, name, done, id_user):
     """
     Update task
     """
     with connection() as (cur, conn):
-        cur.execute("UPDATE task SET name=%s, done=%s WHERE id = %s RETURNING id",  (name, done, id))
+        cur.execute("UPDATE task SET name=%s, done=%s WHERE id = %s and id_user = %s RETURNING id",  (name, done, id, id_user))
         conn.commit()
         return id
         
-def delete(id):
+def delete(id, id_user):
     with connection() as (cur, conn):
-        cur.execute(f"DELETE FROM {table} WHERE id = %s",  (id,))
+        cur.execute(f"DELETE FROM {table} WHERE id = %s and id_user = %s",  (id, id_user))
         conn.commit()
         return True
