@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 import controllers.auth
 from middlewares.auth_middleware import refresh_token_verifier
-auth = Blueprint('auth',__name__, url_prefix='/api/v1')
+auth = Blueprint('auth',__name__, url_prefix='/api/v1/auth')
 
 @auth.route('/login', methods = ['POST'])
 def login():
