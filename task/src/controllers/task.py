@@ -34,7 +34,7 @@ def create_task(id_user, data):
     if name == '':
         return {'message':'name required'}, 400
     if type(name) != str:
-         return {'message':'name shoudl be string'}, 400   
+         return {'message':'name should be string'}, 400   
     id = add(name, id_user)
     return {'id': id}, 201
 
@@ -49,9 +49,9 @@ def edit_task(id_user, id, data):
             return {'message':'done required'}, 400
 
         if type(name) != str:
-            return {'message': f'name should be string'}, 400
+            return {'message': 'name should be string'}, 400
         if type(done) != bool:
-            return {'message': f'done should be type boolean'}, 400       
+            return {'message': 'done should be type boolean'}, 400       
         
         task, _ = select_one(id_user, id )
         if task is None:

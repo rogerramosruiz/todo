@@ -18,6 +18,19 @@ def tests_create_task():
     assert task_json['name'] == task['name']
     assert task_json['done'] == False
 
+def test_create_task_validatoins():
+    token = createuser_login()
+    task = {}
+    r = create_task(task, token)
+    assert r.status_code == 400
+    assert r.json()['message'] == 'name required'
+    task = {
+        'name': 5
+    }
+    r = create_task(task, token)
+    assert r.status_code == 400
+    assert r.json()['message'] == 'name should be string'
+
 
 def test_get_tasks():
     n = 5
@@ -54,6 +67,37 @@ def test_edit_task():
     assert task_json['done'] == task['done']
     assert task_json['name'] == task['name']
 
+def test_edit_task_validations():
+    token = createuser_login()
+    task = {}
+    r = edit_task(1, task, token)
+    assert r.status_code == 400
+    assert r.json()['message'] == 'name required'
+    task = {
+        'name': 'test'
+    }
+    r = edit_task(1,task, token,)
+    assert r.status_code == 400
+    assert r.json()['message'] == 'done required'
+   
+    task = {
+        'name': 56,
+        'done': False
+    }
+    r = edit_task(1,task, token,)
+    assert r.status_code == 400
+    assert r.json()['message'] == 'name should be string'
+    
+    task = {
+        'name': 'test',
+        'done': 'sadjfk'
+    }
+    r = edit_task(1,task, token,)
+    assert r.status_code == 400
+    assert r.json()['message'] == 'done should be type boolean'
+
+
+
 def test_delete_task():
     token = createuser_login()
     task = gen_task()
@@ -67,5 +111,3 @@ def test_delete_task():
     r = get_task(id, token)
     assert r.status_code == 404
     assert r.json()['message'] == 'Task not found'
-
-
