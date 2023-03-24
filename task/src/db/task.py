@@ -1,5 +1,5 @@
 from db.connection import connection
-import db.queries as queries
+
 table = 'task'
 
 def select(id_user ,limit:int = 30, offset:int = 0):
@@ -7,7 +7,7 @@ def select(id_user ,limit:int = 30, offset:int = 0):
     Get all tasks
     """
     with connection() as (cur, _):
-        cur.execute(f'SELECT * FROM {table} WHERE id_user = %s ORDER BY id LIMIT %s OFFSET %s', (id_user, limit, offset, ))
+        cur.execute(f'SELECT id, name, done FROM {table} WHERE id_user = %s ORDER BY id LIMIT %s OFFSET %s', (id_user, limit, offset, ))
         description = cur.description
         data = cur.fetchall()
         return data, description
@@ -16,7 +16,12 @@ def select_one(id_user, id):
     """
     Select one task
     """
-    return queries.select_one(table, id, id_user)
+    with connection() as (cur, _):
+        cur.execute(f'SELECT id, name, done FROM {table} WHERE id = %s and id_user = %s', (id, id_user))
+        description = cur.description
+        data = cur.fetchone()
+        return data, description
+   
 
 def add(name, id_user):
     """
