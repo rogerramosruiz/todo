@@ -39,7 +39,7 @@ services:
     volumes:
       - ./volumes/db_auth:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
       interval: 2s
       retries: 5
       start_period: 2s
@@ -53,7 +53,7 @@ services:
     volumes:
       - ./volumes/db_task:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
       interval: 2s
       retries: 5
       start_period: 2s
@@ -66,14 +66,17 @@ services:
       - ./volumes/redis/data:/data 
     env_file:
       - .redis.env
-    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD}
+    command:      
+      - /bin/sh
+      - -c
+      - redis-server --save 20 1 --loglevel warning --requirepass "$${REDIS_PASSWORD:?REDIS_PASSWORD variable is not set}"
     healthcheck:
-      test: ["CMD-SHELL", "redis-cli -a ${REDIS_PASSWORD} ping"]
+      test: ["CMD-SHELL", "redis-cli -a $${REDIS_PASSWORD} ping"]
       interval: 2s
       timeout: 5s
       retries: 5
       start_period: 2s
-  
+
   nginx:
     image: nginx
     restart: always
