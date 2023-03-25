@@ -1,6 +1,6 @@
 import requests
 
-ENDPOINT = 'http://localhost:3000/api/v1/auth'
+ENDPOINT = 'http://localhost/api/v1/auth'
 def sign_up(json_paload):
     return requests.post(f'{ENDPOINT}/signup', json=json_paload)
 

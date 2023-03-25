@@ -1,7 +1,7 @@
 import requests
 from helpers import gen_user
 
-AUTH_ENDPOINT = 'http://localhost:3000/api/v1/auth'
+AUTH_ENDPOINT = 'http://localhost/api/v1/auth'
 
 def sign_up(json_payload):
     return requests.post(f'{AUTH_ENDPOINT}/signup', json=json_payload)

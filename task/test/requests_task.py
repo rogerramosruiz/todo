@@ -2,7 +2,7 @@ import requests
 from requests_auth import createuser_login
 
 
-TASK_ENDPOINT = 'http://localhost:8080/api/v1/task'
+TASK_ENDPOINT = 'http://localhost/api/v1/task'
 
 
 def create_task(task, token):
