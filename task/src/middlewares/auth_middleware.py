@@ -8,7 +8,7 @@ def token_verifier(func):
     def decorated(*args, **kwargs):
         headers = request.headers
         token = headers.get('Authorization', '')
-        r = requests.get(f'{AUTH_SERVER}/verify',headers={
+        r = requests.get(f'http://{AUTH_SERVER}/api/v1/auth/verify',headers={
             'Authorization': token
         })
         resp_json = r.json()

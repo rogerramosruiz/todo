@@ -8,11 +8,13 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def ping():
-    return {'message': 'ok'}
+    return 'ok'
 
 app.register_blueprint(users)
 app.register_blueprint(auth)
 
+intialize()
+
 if __name__ == '__main__':
-    intialize()
+    print('init')
     app.run('0.0.0.0', PORT, debug=DEBUG)

@@ -1,0 +1,73 @@
+version: '3'
+services:
+  auth:
+    image: auth
+    build: auth/
+    env_file:
+      - .auth.env
+      - .auth.postgres.env
+      - .redis.env
+    environment:
+      - DB_HOST=db_auth
+      - REDIS_HOST=redis_auth
+    ports:
+      - 3000:3000
+    depends_on:
+      db_auth:
+        condition: service_healthy
+      redis_auth:
+        condition: service_healthy
+    
+  task:
+    image: tasks
+    build: task/
+    env_file:
+      - .task.env
+      - .task.postgres.env
+    environment:
+      - DB_HOST=db_task
+      - AUTH_SERVER=auth:3000
+    ports:
+      - 8080:8080
+    depends_on:
+      db_task:
+        condition: service_healthy
+      auth:
+        condition: service_started
+
+  db_auth:
+    image: postgres
+    restart: always
+    env_file:
+      - .auth.postgres.env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 2s
+      retries: 5
+      start_period: 2s
+      timeout: 10s
+  
+  db_task:
+    image: postgres
+    restart: always
+    env_file:
+      - .task.postgres.env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 2s
+      retries: 5
+      start_period: 2s
+      timeout: 10s
+
+  redis_auth:
+    image: redis
+    restart: always
+    env_file:
+      - .redis.env
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a ${REDIS_PASSWORD} ping"]
+      interval: 2s
+      timeout: 5s
+      retries: 5
+      start_period: 1s

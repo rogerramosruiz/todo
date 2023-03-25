@@ -8,6 +8,6 @@ app = Flask(__name__)
 app.register_blueprint(task)
 
 
+intialize()
 if __name__ == '__main__':
-    intialize()
     app.run('0.0.0.0', PORT, DEBUG)

@@ -7,9 +7,9 @@ DEBUG = os.getenv("DEBUG", 'false').lower() in ('true', '1', 't')
 PORT = os.environ.get('PORT')
 DB_HOST = os.getenv('DB_HOST')
 DB_NAME = os.getenv('DB_NAME')
-DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_USER = os.getenv('POSTGRES_USER')
+DB_PASSWORD = os.getenv('POSTGRES_PASSWORD')
 DB_PORT = os.getenv('DB_PORT')
-DB_USER = os.getenv('DB_USER')
 DB_INIT_SCRIPT_PATH = os.getenv('DB_INIT_SCRIPT_PATH')
 
 # JWT SECRETS
