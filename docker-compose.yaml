@@ -40,6 +40,8 @@ services:
     restart: always
     env_file:
       - .auth.postgres.env
+    volumes:
+      - ./volumes/db_auth:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 2s
@@ -52,6 +54,8 @@ services:
     restart: always
     env_file:
       - .task.postgres.env
+    volumes:
+      - ./volumes/db_task:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 2s
@@ -62,6 +66,8 @@ services:
   redis_auth:
     image: redis
     restart: always
+    volumes:
+      - ./volumes/redis/data:/data 
     env_file:
       - .redis.env
     command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD}
