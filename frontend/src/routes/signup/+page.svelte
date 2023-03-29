@@ -1,11 +1,20 @@
 <script>
     import { goto } from '$app/navigation';
-    import {request} from '../../lib/request/request'
-    
+    import {request} from '../../lib/helpers/request'
+ 
+    import {onMount} from "svelte"
+    import {isLoggedIn} from '../../lib/helpers/helper'
+ 
+    onMount(() => {
+      if(isLoggedIn()){
+        goto('/')
+      }
+    })
+
+
     let username="", password = "", confirmation=""
     let error = false
     let message = ""
-
     $: submit = async() =>{
         console.log('requesting ')
         const response = await request('api/v1/auth/signup', false, 'POST', {
@@ -64,7 +73,6 @@
             {:else}
                 <h1 class="text-red-600": >{message}</h1>
             {/if}
-          
       </div>
       </div>
     </form>

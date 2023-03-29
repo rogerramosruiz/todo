@@ -1,6 +1,6 @@
 <script>
     import {taskStore} from '../../lib/store/taskStore'
-    import {request } from '../request/request'
+    import {request } from '../helpers/request'
     export let task
     
     let editing = false

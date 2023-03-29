@@ -57,3 +57,18 @@ export async function request(url, auth=false, method = 'GET', body,){
     return resp
 
 }
+
+export async function logout(){
+    const header = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.refreshToken}`
+    }
+    await fetch(`${PUBLIC_API_URL}/api/v1/auth/logout`, {
+        method: 'DELETE',
+        headers: header,
+    })
+    localStorage.clear()
+    goto('/login')
+}
+ 

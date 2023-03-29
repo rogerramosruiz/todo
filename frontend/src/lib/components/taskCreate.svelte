@@ -1,6 +1,6 @@
 <script>
     import {taskStore} from '../../lib/store/taskStore'
-    import {request } from '../request/request'
+    import {request } from '../helpers/request'
     import Icon from 'svelte-icons-pack/Icon.svelte';
     import AiOutlineNodeExpand from 'svelte-icons-pack/ai/AiOutlineNodeExpand';
     import plus from 'svelte-icons-pack/im/ImPlus';

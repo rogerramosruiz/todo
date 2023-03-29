@@ -1,9 +1,18 @@
 <script>
     import { goto } from '$app/navigation';
-    import {request} from '../../lib/request/request'
-
+    import {request} from '../../lib/helpers/request'
+    import {onMount} from "svelte"
+    import {isLoggedIn} from '../../lib/helpers/helper'
+    
     let username="", password = ""
+  
 
+    onMount(() => {
+      if(isLoggedIn()){
+        goto('/')
+      }
+    })
+ 
     $: submit = async() =>{
         const response = await request('api/v1/auth/login',false, 'POST',  {
             username, 
@@ -17,7 +26,7 @@
 </script>
 <nav class="flex justify-end">
     <button 
-    on:click={()=>goto('register')}
+    on:click={()=>goto('signup')}
     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-5 rounded focus:outline-none focus:shadow-outline" type="submit">
         Sign up
     </button>
