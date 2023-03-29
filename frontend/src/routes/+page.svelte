@@ -53,13 +53,13 @@
     </button>
 </nav>
 
-<main>
+<div class="grid place-items-center w-screen">
     <TaskCreate />
     <h1>Tasks</h1>    
-    {#each $taskStore as task}
-		<li>
+    <div >
+        {#each $taskStore as task}
             <Task task={task}/>
-		</li>
-	{/each}
+        {/each}
+    </div>
 
-</main>
+</div>
