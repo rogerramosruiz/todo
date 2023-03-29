@@ -15,7 +15,7 @@
         })
         const data = await response.json()
         if(response.status == 201){
-            message = 'user created, redirecting to login'
+            message = 'User created, redirecting to login'
             setTimeout(() =>goto('login'), 1000) 
             error = false
         }
@@ -26,6 +26,13 @@
     }
 </script>
 
+<nav class="flex justify-end">
+    <button 
+    on:click={()=>goto('login')}
+    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-5 rounded focus:outline-none focus:shadow-outline" type="submit">
+        Login
+    </button>
+</nav>
 
 <div class="grid place-items-center sm:h-4 w-screen">
     <form on:submit|preventDefault={submit} class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 lg:w-1/4 ">

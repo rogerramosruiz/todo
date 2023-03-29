@@ -15,9 +15,15 @@
         goto('/')
     }
 </script>
-
-<div class="grid place-items-center sm:h-4 w-screen">
-  <form on:submit|preventDefault={submit} class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 lg:w-1/4 ">
+<nav class="flex justify-end">
+    <button 
+    on:click={()=>goto('register')}
+    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-5 rounded focus:outline-none focus:shadow-outline" type="submit">
+        Sign up
+    </button>
+</nav>
+<div class="grid place-items-center sm:h-4 w-screen h-screen">
+  <form on:submit|preventDefault={submit} class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-96 md:mb-0 md:mt-28 lg:w-1/4 ">
     <div class="mb-4">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
         Username

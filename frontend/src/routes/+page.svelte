@@ -4,6 +4,8 @@
     import { goto } from '$app/navigation'
     import {request} from '../lib/request/request'
     import Task from "../lib/components/Task.svelte";
+    import taskCreate from '../lib/components/taskCreate.svelte'
+    import TaskCreate from '../lib/components/taskCreate.svelte';
 
     let name = ''
 
@@ -43,16 +45,16 @@
      
 </script>
 
+<nav class="flex justify-end">
+    <button 
+    on:click={()=>goto('login')}
+    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-5 rounded focus:outline-none focus:shadow-outline" type="submit">
+        Logout 
+    </button>
+</nav>
+
 <main>
-    <form on:submit|preventDefault={createTask}>
-        <div>
-            <label for="name">Task name</label>
-            <input id="name" type="text" bind:value ={name} placeholder="task name">
-        </div>
-        <button type="submit">Submit</button>
-    </form>
-
-
+    <TaskCreate />
     <h1>Tasks</h1>    
     {#each $taskStore as task}
 		<li>
