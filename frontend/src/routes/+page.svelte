@@ -34,7 +34,6 @@
                 name: name
             },
             ...$taskStore
-
         ]
         }
 
@@ -46,7 +45,6 @@
 
 <main>
     <form on:submit|preventDefault={createTask}>
-        <h1>Please sign in</h1>
         <div>
             <label for="name">Task name</label>
             <input id="name" type="text" bind:value ={name} placeholder="task name">

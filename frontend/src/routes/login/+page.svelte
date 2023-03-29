@@ -18,7 +18,7 @@
 
 <main>
     <form on:submit|preventDefault={submit}>
-        <h1>Please sign in</h1>
+        <h1>Login</h1>
         <div>
             <label for="username">Username</label>
             <input id="username" type="text" bind:value ={username} placeholder="username">
