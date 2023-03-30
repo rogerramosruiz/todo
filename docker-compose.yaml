@@ -30,6 +30,17 @@ services:
         condition: service_healthy
       auth:
         condition: service_started
+  
+  svelte:
+    image: svelte-frontend
+    build:
+      context: frontend
+      args:
+        - PUBLIC_API_URL=$PUBLIC_API_URL
+    expose:
+      - 3000
+    env_file:
+      - .svelte.env
 
   db_auth:
     image: postgres
@@ -85,10 +96,12 @@ services:
     environment:
       - AUTH_SERVER=auth:3000
       - TASK_SERVER=task:8080
+      - FRONTEND_SERVER=svelte:3000
     command: bash /home/conf/config.sh
     depends_on:
       - auth
       - task
+      - svelte
     ports:
       - 80:80
       - 443:443
