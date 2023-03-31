@@ -1,25 +1,6 @@
-<style>
-img {
-    margin-right: 10px;
-}
-</style>
+# Todo App
 
-#<center>Todo App</center>
-
-##Stack
-<img src="https://raw.githubusercontent.com/docker-library/docs/01c12653951b2fe592c1f93a13b4e289ada0e3a1/postgres/logo.png" width="60">
-
-<img src="https://redis.com/wp-content/themes/wpx/assets/images/logo-redis.svg" height="50"> 
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Flask_logo.svg" height="60"> 
-
-
-<img src="https://www.docker.com/wp-content/uploads/2022/03/vertical-logo-monochromatic.png" height="60">
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Svelte_Logo.svg" height="60">
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" height="60">
-#### Table of Contents
+## Table of Contents
 - [Stack](#stack)
 - [Setup](#set-up)
     - [Requirements](#requirements)
@@ -30,8 +11,12 @@ img {
     - [Create a virutal environment](#create-a-virutal-environment)
     - [Run tests](#run-tests)
 
+## Stack
 
-##Set up
+<img src="https://raw.githubusercontent.com/docker-library/docs/01c12653951b2fe592c1f93a13b4e289ada0e3a1/postgres/logo.png" width="60"> <img src="https://redis.com/wp-content/themes/wpx/assets/images/logo-redis.svg" height="50"> <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Flask_logo.svg" height="60"> <img src="https://www.docker.com/wp-content/uploads/2022/03/vertical-logo-monochromatic.png" height="60"> <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Svelte_Logo.svg" height="60"> <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" height="60">
+
+
+## Set up
 
 ### Requirements
 - Docker
