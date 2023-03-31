@@ -36,7 +36,8 @@ mv ./envfiles/.redis.env.template ./envfiles/.redis.env
 mv ./envfiles/.task.env.template ./envfiles/.task.env
 mv ./envfiles/.task.postgres.env.template ./envfiles/.task.postgres.env
 ```
-Fill the environnment files
+
+Fill the empty variables in the environnment files
 
 ### Run with docker-compose
 
