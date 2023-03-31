@@ -4,10 +4,11 @@ services:
     image: auth
     build: auth/
     env_file:
-      - .auth.env
-      - .auth.postgres.env
-      - .redis.env
+      - ./envfiles/.auth.env
+      - ./envfiles/.auth.postgres.env
+      - ./envfiles/.redis.env
     environment:
+      - PORT=3000
       - DB_HOST=db_auth
       - REDIS_HOST=redis_auth
     depends_on:
@@ -15,14 +16,16 @@ services:
         condition: service_healthy
       redis_auth:
         condition: service_healthy
-    
+    expose:
+      - 3000
   task:
     image: tasks
     build: task/
     env_file:
-      - .task.env
-      - .task.postgres.env
+      - ./envfiles/.task.env
+      - ./envfiles/.task.postgres.env
     environment:
+      - PORT=8080
       - DB_HOST=db_task
       - AUTH_SERVER=auth:3000
     depends_on:
@@ -30,23 +33,23 @@ services:
         condition: service_healthy
       auth:
         condition: service_started
-  
+    expose:
+      - 8080
+
   svelte:
     image: svelte-frontend
     build:
       context: frontend
       args:
-        - PUBLIC_API_URL=$PUBLIC_API_URL
+        - PUBLIC_API_URL
     expose:
       - 3000
-    env_file:
-      - .svelte.env
 
   db_auth:
     image: postgres
     restart: always
     env_file:
-      - .auth.postgres.env
+      - ./envfiles/.auth.postgres.env
     volumes:
       - ./volumes/db_auth:/var/lib/postgresql/data
     healthcheck:
@@ -60,7 +63,7 @@ services:
     image: postgres
     restart: always
     env_file:
-      - .task.postgres.env
+      - ./envfiles/.task.postgres.env
     volumes:
       - ./volumes/db_task:/var/lib/postgresql/data
     healthcheck:
@@ -76,7 +79,7 @@ services:
     volumes:
       - ./volumes/redis/data:/data 
     env_file:
-      - .redis.env
+      - ./envfiles/.redis.env
     command:      
       - /bin/sh
       - -c
