@@ -5,7 +5,7 @@
     import {isLoggedIn} from '../../lib/helpers/helper'
     
     let username="", password = ""
-  
+    let message = ''
 
     onMount(() => {
       if(isLoggedIn()){
@@ -19,9 +19,16 @@
             password
         })
         const data = await response.json()
-        localStorage.accessToken = data.access_token
-        localStorage.refreshToken = data.refresh_token
-        goto('/')
+        if (response.status >= 400 && response.status < 500){
+          message = data.message
+          username = ""
+          password = ""
+        }
+        if (response.status === 200){
+          localStorage.accessToken = data.access_token
+          localStorage.refreshToken = data.refresh_token
+          goto('/')
+        }
     }
 </script>
 <nav class="flex justify-end">
@@ -44,7 +51,6 @@
         Password
       </label>
       <input bind:value = {password} class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************">
-      <!-- <p class="text-red-500 text-xs italic">Please choose a password.</p> -->
     </div>
     <div class="grid place-items-center">
       <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
@@ -52,4 +58,7 @@
       </button>
     </div>
   </form>
+  <h1 class="text-red-500 text-md italic">
+    {message}
+  </h1>
 </div>
