@@ -42,11 +42,12 @@ Fill the empty variables in the environnment files
 ### Run with docker-compose
 
 First set **PUBLIC_API_URL** with your domain name or IP address for the front-end
-Linux
 
+Linux
 ```bash
 export PUBLIC_API_URL=http://192.168.0.2
 ```
+
 Windows
 
 ```bash
