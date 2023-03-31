@@ -21,11 +21,8 @@
     async function edit(){
         const resp = await request(`api/v1/task/${task.id}`, true, 'PUT', task)
         if (resp.status !== 202){
-            console.log(resp)
-            return
+                return
         }
-        console.log('edited', task.id)
-        console.log(resp.status)
         $taskStore = $taskStore
     }
     async function save(){
@@ -76,17 +73,21 @@
         {/if}
     </div>
 
-    <div class="flex space-x-4 mt-3 font-medium">
-        <input class=" text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-        on:click={updateCheck} checked={task.done} type="checkbox" >
-        <div class="flex space-x-4 mt-5">
-            {#if !editing}
-            <p>
-                {task.name}
-            </p>
-            {:else}
-            <input class="w-full p-2 text-sm border-b-2 border-gray-400 outline-none opacity-50 focus:border-blue-500" bind:value={task.name}>
-            {/if}
+    <div class="flex space-x-4 mt-3 font-medium w-full justify-items-center">
+        <div class="flex space-x-5">
+            <div class="mt-5">
+                <input class=" text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                on:click={updateCheck} checked={task.done} type="checkbox" >
+            </div>
+            <div class="mt-5">
+                {#if !editing}
+                <p>
+                    {task.name}
+                </p>
+                {:else}
+                <input class="w-full p-2 text-sm border-b-2 border-gray-400 outline-none opacity-50 focus:border-blue-500" bind:value={task.name}>
+                {/if}
+            </div>
         </div>
         <div class="{color} rounded-3xl text-white">
             <div class="px-2 py-4">
