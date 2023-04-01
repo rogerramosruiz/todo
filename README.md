@@ -7,6 +7,7 @@
     - [Environmet files](#environmet-files)
     - [Run with docker](#run-with-docker-compose)
 - [Testing (optional)](#testing-optional)
+    - [Warning](#warning)
     - [Requirements](#test-requirements)
     - [Create a virutal environment](#create-a-virutal-environment)
     - [Run tests](#run-tests)
@@ -29,12 +30,23 @@ cd todo
 ```
 ### Environmet files
 Rename the the environment files
+
+Linux
 ```bash
 mv ./envfiles/.auth.env.template ./envfiles/.auth.env
 mv ./envfiles/.auth.postgres.env.template ./envfiles/.auth.postgres.env
 mv ./envfiles/.redis.env.template ./envfiles/.redis.env
 mv ./envfiles/.task.env.template ./envfiles/.task.env
 mv ./envfiles/.task.postgres.env.template ./envfiles/.task.postgres.env
+```
+
+Windows
+```powershell
+move envfiles\.auth.env.template envfiles\.auth.env
+move envfiles\.auth.postgres.env.template envfiles\.auth.postgres.env
+move envfiles\.redis.env.template envfiles\.redis.env
+move envfiles\.task.env.template envfiles\.task.env
+move envfiles\.task.postgres.env.template envfiles\.task.postgres.env
 ```
 
 Fill the empty variables in the environnment files
@@ -67,6 +79,9 @@ docker-compose up --build -d
 
 ## Testing optional
 First make sure containers are running
+
+### Warning
+Running tests will polute your databases, delete the directory volumes once tests are done
 
 ### Test requirements
 - python
