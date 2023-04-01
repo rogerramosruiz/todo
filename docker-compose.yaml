@@ -12,12 +12,11 @@ services:
       - DB_HOST=db_auth
       - REDIS_HOST=redis_auth
     depends_on:
-      db_auth:
-        condition: service_healthy
-      redis_auth:
-        condition: service_healthy
+      - db_auth
+      - redis_auth
     expose:
       - 3000
+
   task:
     image: tasks
     build: task/
@@ -29,10 +28,8 @@ services:
       - DB_HOST=db_task
       - AUTH_SERVER=auth:3000
     depends_on:
-      db_task:
-        condition: service_healthy
-      auth:
-        condition: service_started
+      - db_task
+      - auth
     expose:
       - 8080
 
@@ -56,7 +53,6 @@ services:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
       interval: 2s
       retries: 5
-      start_period: 2s
       timeout: 10s
   
   db_task:
@@ -70,7 +66,6 @@ services:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
       interval: 2s
       retries: 5
-      start_period: 2s
       timeout: 10s
 
   redis_auth:
@@ -89,7 +84,6 @@ services:
       interval: 2s
       timeout: 5s
       retries: 5
-      start_period: 2s
 
   nginx:
     image: nginx
