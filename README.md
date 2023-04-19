@@ -81,7 +81,7 @@ docker-compose up --build -d
 First make sure containers are running
 
 ### Warning
-Running tests will polute your databases, delete the directory volumes once tests are done
+Running tests will polute your databases, delete the directory volumes once tests have concluded
 
 ### Test requirements
 - python
