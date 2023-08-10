@@ -18,6 +18,8 @@ services:
         condition: service_healthy
     expose:
       - 3000
+    restart: always
+
   task:
     image: tasks
     build: task/
@@ -35,6 +37,7 @@ services:
         condition: service_started
     expose:
       - 8080
+    restart: always
 
   svelte:
     image: svelte-frontend
@@ -44,6 +47,7 @@ services:
         - PUBLIC_API_URL
     expose:
       - 3000
+    restart: always
 
   db_auth:
     image: postgres
